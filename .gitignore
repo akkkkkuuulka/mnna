@@ -1,0 +1,17 @@
+# данные и чекпоинты на GitHub не грузим
+data/
+checkpoints/
+
+# python
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+
+# окружение и секреты
+.env
+
+# jupyter / macOS / временное
+.ipynb_checkpoints/
+.DS_Store
+run_nb.py
