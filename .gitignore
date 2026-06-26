@@ -1,6 +1,6 @@
-# данные и чекпоинты на GitHub не грузим
-data/
-checkpoints/
+# данные и чекпоинты на GitHub не грузим (только корневые папки, не src/data!)
+/data/
+/checkpoints/
 
 # python
 __pycache__/

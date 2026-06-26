@@ -1,0 +1,15 @@
+from pathlib import Path
+
+MAX_WORDS = 700
+MIN_WORDS = 20
+MAX_LENGTH = 1024
+BPE_VOCAB_SIZE = 32000
+WORD_VOCAB_SIZE = 50000
+TARGET_LEN = 512
+WARC_CRAWL_ID = "CC-MAIN-2024-10"
+
+DATA_DIR = Path("data")
+RAW_DIR = DATA_DIR / "raw"
+PROCESSED_DIR = DATA_DIR / "processed"
+WARC_PATH = RAW_DIR / "cc-segment.warc.gz"
+BPE_PATH = PROCESSED_DIR / "bpe_tokenizer.json"

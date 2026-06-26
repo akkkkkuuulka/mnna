@@ -1,0 +1,10 @@
+warcio
+beautifulsoup4
+langdetect
+ftfy
+torch
+transformers
+tokenizers
+datasets
+tqdm
+matplotlib
