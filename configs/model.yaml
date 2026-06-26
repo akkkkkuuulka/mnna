@@ -1,0 +1,54 @@
+# GPT-like model + training config (HuggingFace-style, loaded with OmegaConf).
+# Everything that defines the model and its training must live here, not in code.
+
+model:
+  vocab_size: 32000        # BPE vocab from lab1 (overridden at runtime from tokenizer)
+  max_seq_len: 512         # = packed batch target length (lab1 TARGET_LEN)
+  d_model: 512
+  n_layers: 8
+  n_heads: 8                # число Q-голов
+  n_kv_heads: 2             # GQA: число K/V-голов (делит n_heads); меньше -> меньше KV-кэш
+  d_ff: 2048
+  dropout: 0.1
+  tie_weights: true        # share token embedding with LM head
+  pad_token_id: 0          # segment id 0 == padding
+  use_flash: true          # Flash Attention через SDPA
+
+data:
+  dataset: wikitext        # wikitext | common_crawl
+  bpe_tokenizer_path: ${oc.env:BPE_TOKENIZER_PATH,../lab-1/data/processed/bpe_tokenizer.json}
+  target_len: 512
+  batch_size: 32
+  num_workers: 2
+  val_fraction: 0.05
+  max_documents: null      # null = все документы; число = ограничить для быстрых прогонов
+
+logging:
+  clearml_project: mnna-lab2
+  clearml_task: gpt-gqa-wikitext
+
+optim:
+  lr: 3.0e-4
+  weight_decay: 0.1
+  betas: [0.9, 0.95]
+  warmup_steps: 1000
+  max_steps: 90000
+  min_lr_ratio: 0.1        # cosine decays lr to min_lr_ratio * lr
+  grad_clip: 1.0
+  target_perplexity: 25   # EarlyStopping: стоп при достижении
+
+trainer:
+  max_epochs: -1           # driven by optim.max_steps
+  precision: 16-mixed
+  compile: true            # torch.compile для ускорения
+  accumulate_grad_batches: 1
+  val_check_interval: 1000
+  log_every_n_steps: 50
+  track_layer_grad_norms: false   # на длинном ране только глобальная норма (меньше логов)
+  max_time: "00:08:30:00"         # остановиться до лимита Kaggle и сохранить чекпоинт
+
+generate:
+  prompt: "The history of"
+  max_new_tokens: 100
+  temperature: 0.8
+  top_k: 50

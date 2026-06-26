@@ -1,0 +1,10 @@
+torch
+lightning
+omegaconf
+clearml
+tensorboard
+python-dotenv
+tokenizers
+datasets
+numpy
+tqdm
