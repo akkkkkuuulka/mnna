@@ -1,6 +1,6 @@
 # данные и чекпоинты на GitHub не грузим
-data/
-checkpoints/
+/data/
+/checkpoints/
 
 # python
 __pycache__/
